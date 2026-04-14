@@ -1,0 +1,18 @@
+version: 0.0
+os: linux
+
+hooks:
+  ApplicationStop:
+    - location: scripts/stop_container.sh
+      timeout: 300
+      runas: root
+  AfterInstall:
+    - location: scripts/start_container.sh
+      timeout: 300
+      runas: root
+
+# 中文说明：
+# ApplicationStop - 应用停止时执行的钩子，调用停止容器脚本
+# AfterInstall - 安装后执行的钩子，调用启动容器脚本
+# timeout: 300 - 超时时间 300 秒
+# runas: root - 以 root 用户运行
