@@ -1,0 +1,23 @@
+# AWS CodeDeploy 应用规范文件 (中文注释版)
+# 用于定义部署生命周期钩子和相关脚本
+#
+# version: 应用规范文件版本
+# os: 目标操作系统类型
+
+version: 0.0
+os: linux
+
+hooks:
+  # ApplicationStop: 应用停止阶段
+  # 在部署新版本之前停止当前运行的应用
+  ApplicationStop:
+    - location: scripts/stop_container.sh   # 停止容器的脚本路径
+      timeout: 300                           # 脚本执行超时时间（秒）
+      runas: root                            # 以 root 用户执行脚本
+
+  # AfterInstall: 安装后阶段
+  # 在新版本文件安装完成后执行
+  AfterInstall:
+    - location: scripts/start_container.sh  # 启动容器的脚本路径
+      timeout: 300                           # 脚本执行超时时间（秒）
+      runas: root                            # 以 root 用户执行脚本
